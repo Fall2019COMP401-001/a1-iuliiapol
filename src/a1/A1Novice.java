@@ -25,7 +25,10 @@ public class A1Novice {
 
 		/*
 		 * String array boughtItems will contain information about
-		 * how many types of items EACH customer bought
+		 * how many TYPES of items EACH customer bought
+		 * 
+		 * example: If first customer bought 5 bananas, then
+		 * for [0] will refer to value of 5
 		 * */
 		int [] boughtItems = new int [numCustomers];
 
@@ -33,13 +36,26 @@ public class A1Novice {
 		 * Following lines set up variables 
 		 * necessary for getting information about bought items
 		 * */
-		int itemQuantity; //integer quantity of the item bought
-		String itemName; //name of the item
-		double itemPrice; //price of the item
-		double totalPrice = 0; //will hold spent total by current customer
+		
+		//integer quantity of the item bought
+		
+		int itemQuantity; 
+		
+		//name of the item
+		
+		String itemName; 
+		
+		//price of the item
+		
+		double itemPrice;
+		
+		//will hold spent total by current customer
+		
+		double totalPrice = 0; 
 
 		//Double array totalPrices will hold 
 		//totals of purchases of each customer
+		
 		double [] totalPrices = new double [numCustomers];
 
 		/*
@@ -50,11 +66,16 @@ public class A1Novice {
 		 * */
 		for (int i = 0; i<numCustomers; i++) {
 
-			firstNames[i] = scan.next(); //scan for FIRST name of the customer
+			//scan for FIRST name of the customer
+			
+			firstNames[i] = scan.next(); 
 
-			lastNames [i] = scan.next(); //scan for LAST name of the customer
+			//scan for LAST name of the customer
+			
+			lastNames [i] = scan.next(); 
 
 			//scan for NUMBER of types of bought items by current customer
+			
 			boughtItems[i] = scan.nextInt(); 
 
 			/*
@@ -64,11 +85,22 @@ public class A1Novice {
 			 * calculates total price spent on items
 			 */
 			for (int j = 0; j<boughtItems[i]; j++) {
-				itemQuantity = scan.nextInt(); //scan for item quantity of current type of product
-				itemName = scan.next(); //scan for item name
-				itemPrice = scan.nextDouble(); //scan for item's price
+				
+				//scan for item quantity of current type of product
+				
+				itemQuantity = scan.nextInt(); 
+				
+				//scan for item name
+				
+				itemName = scan.next(); 
+				
+				//scan for item's price
+				
+				itemPrice = scan.nextDouble(); 
 
-				totalPrice += itemQuantity*itemPrice; //total price of the purchase
+				//total price of the purchase
+				
+				totalPrice += itemQuantity*itemPrice; 
 
 			}
 
@@ -82,9 +114,11 @@ public class A1Novice {
 		}
 
 		//calls print result method
+		
 		printResult (numCustomers, firstNames, lastNames, totalPrices);
 
 		// All input parsed, so close scanner
+		
 		scan.close();
 
 	}
@@ -103,8 +137,10 @@ public class A1Novice {
 	 * Preconditions: 
 	 * Arrays shouldn't be empty
 	 */
+	
 	static void printResult (int numCustomers, String [] firstNames, 
 			String [] lastNames, double [] totalPrices) {
+	
 		for (int i = 0; i<numCustomers; i++) {
 			System.out.println(firstNames[i].charAt(0) + ". " + lastNames[i] + ": " 
 					+ String.format("%.2f", totalPrices[i]));
