@@ -135,6 +135,7 @@ public class A1Jedi {
 			}
 			
 			//System.out.printf("%n");
+			//hello
 		}
 		
 		printResults(itemNames, totalQuantities, totalCustomers);
