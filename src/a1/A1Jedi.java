@@ -1,5 +1,7 @@
 package a1;
 
+import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Scanner;
 
 public class A1Jedi {
@@ -10,131 +12,198 @@ public class A1Jedi {
 
 		// Your code follows here.
 		
-		//Scanner accepts number of items in the store
+		//Scanner accepts number of types of items available at the store
+		
+		int itemTypes = scan.nextInt();
+		
+		//Array for item names
+		
+		String [] itemNames = new String [itemTypes];
+		
+		//Array for item price
+		
+		double [] itemPrice = new double [itemTypes];
+		
+		//!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+		//(1)
+	    //WILLL BE USED TO FIND TOTAL QUANTITIES OF ITEMS
+		//WILL BE USED FOR FINAL OUTPUT
+		int [] totalQuantities = new int [itemTypes];
+		
+		//WILL BE USED TO FIND TOTAL NUMBER OF CUSTOMERS WHICH BOUGHT THE ITEM
+		//WILL BE USED FOR FINAL OUTPUT
+		int [] totalCustomers = new int [itemTypes];
+		
+		//For loop is used to get name and price of the item
+		
+		for (int i = 0; i<itemTypes; i++) {
+			
+			//scan for item name
+			
+			itemNames[i] = scan.next(); 
+			
+			//scan for item price
+			
+			itemPrice[i] = scan.nextDouble();
+		}
+		
+		//scans number of customers
+		
+		int numCustomers = scan.nextInt();
+		
+		//String array firstNames will contain FIRST names of ALL customers
+		
+		String [] firstNames = new String [numCustomers];
+		
+		//String array lastNames will contain LAST names of ALL customers
+		
+		String [] lastNames = new String [numCustomers];
+		
+		/*
+		 * int array boughtItemTypes will contain number of bought TYPES of items
+		 * 
+		 * example: If Carrie Brownestein 
+		 * bought 3 types of products (Banana, Orange, Milk)
+		 * Array will have value of 3 for these 3 types
+		 * */
 
-				int itemCount = scan.nextInt();
+		int [] boughtItemTypes = new int [numCustomers];
+		
+		//integer quantity of the item bought
+		
+		int itemQuantity; 
 
-				//Array for item names
+		//item name of the item bought
+		
+		String itemName; 
+		
+	    String [] boughtItemNames;
+		//names of items bought by current customer
+		
+		//ArrayList boughtItemNames;
+	    ArrayList <String> boughtTypes;
+		
+		/**
+		 * Outer for loop
+		 * Iterates through each customer and records data 
+		 * 
+		 * Read values in the following arrays
+		 * firstNames, lastNames, boughtItemTypes
+		 */
+		
+		for (int i =0; i<numCustomers; i++) {
+			
+			//scan for FIRST name of the customer
+			
+			firstNames[i] = scan.next(); 
 
-				String [] itemNames = new String [itemCount]; //IMPORTANT!!!
+			//scan for LAST name of the customer
+			
+			lastNames[i] = scan.next(); 
 
-				//Array for item price
-
-				double [] itemPrice = new double [itemCount];
-
-				//For loop is used to get name and price of the item
+			//scan for number of bought TYPES of items
+			
+			boughtItemTypes[i] = scan.nextInt();
+			
+			//keeping track of bought item names to find the match
+			boughtItemNames = new String [ boughtItemTypes[i] ];
+			
+			for (int j = 0; j< boughtItemTypes[i]; j++) {
+				//scan for item quantity of current type of product
 				
-				//(1) IMPORTANT!!!!!! 
-				for (int i = 0; i<itemCount; i++) {
-					
-					//scan for item name
-					
-					itemNames[i] = scan.next(); 
-					
-					//scan for item price
-					
-					itemPrice[i] = scan.nextDouble();
-				}
-
-				//scans number of customers
-
-				int numCustomers = scan.nextInt();
-
-				//String array firstNames will contain FIRST names of ALL customers
-
-				String [] firstNames = new String [numCustomers];
-
-				//String array lastNames will contain LAST names of ALL customers
-
-				String [] lastNames = new String [numCustomers];
-
-				/*
-				 * int array boughtItems will contain number of bought TYPES of items
-				 * 
-				 * example: If first customer bought 5 bananas, then
-				 * for [0] will refer to value of 5
-				 * */
-
-				int [] boughtItems = new int [numCustomers];
-
-				//to keep track number of items bought of particular item
-				int [] customersBought = new int [itemCount]; //IMPORTANT! CUSTOMER COUNT
+				itemQuantity = scan.nextInt();  
 				
-				int [] typesBought = new int [itemCount]; //IMPORTANT! Types bought count
+				//boughtItemQuantities[i] = itemQuantity;
 				
-				//integer quantity of the item bought
+				//scan for item name
 				
-				int itemQuantity; 
-
-				//item name of the item bought
+				itemName = scan.next(); 
 				
-				String itemName; 
-
-				//total spend by current customers
+				boughtItemNames[j] = itemName;
 				
-				double totalSpend = 0; 
+				findTotalQuantities(itemName, itemQuantity, itemNames, totalQuantities);
 				
-				for (int i =0; i<numCustomers; i++) {
-					
-					//scan for FIRST name of the customer
-					
-					firstNames[i] = scan.next(); 
-
-					//scan for LAST name of the customer
-					
-					lastNames[i] = scan.next(); 
-
-					//scan for number of bought TYPES of items
-					
-					boughtItems[i] = scan.nextInt();
-					
-					/**
-					 * Inner for loop
-					 * 
-					 * Gets information about bought items 
-					 * by iterating through types of items
-					 * Calculates total spend on the purchase by current customer
-					 */
-					
-					//IMPORTANT
-					
-					for (int j = 0; j<boughtItems[i]; j++) {
-						
-						//scan for item quantity of current type of product
-						
-						itemQuantity = scan.nextInt();  
-						
-						//scan for item name
-						
-						itemName = scan.next(); 
-						
-						updateTypesCustomerCount(itemName, itemQuantity, itemNames, customersBought, typesBought);
-					}
-					
-				}
+			}
+			
+			//System.out.println (firstNames[i]);
+			
+			boughtTypes = findBoughtTypes(itemNames, boughtItemNames);
+			
+			for (int p = 0; p<boughtTypes.size(); p++) {
+				findTotalCustomers(boughtTypes.get(p), itemNames, totalCustomers);
 				
-				printResults(itemNames, customersBought, typesBought);
-	}
+			}
+			
+			//System.out.printf("%n");
+		}
+		
+		printResults(itemNames, totalQuantities, totalCustomers);
+}
 	
-	//Check whether name of item matches. 
-	//If yes ==> Increase count of customers, 
-	//Increase count of item
-	static void updateTypesCustomerCount(String itemName, int itemQuanity, String [] itemNames, int [] customersBought, int [] typesBought) {
+	//Find matching index to put information about purchase in correct location in the arrays
+	//int [] totalQuantities and int [] totalCustomers
+	static void findTotalQuantities(String currentItemName, int itemQuantity, String [] itemNames, int [] totalQuantities) {
 		for (int i = 0; i < itemNames.length; i++) {
-			if (itemName.equals(itemNames[i])) {
-				customersBought[i] += 1;
-				typesBought [i] += itemQuanity;
+			if (currentItemName.equals(itemNames[i])) {
+				totalQuantities [i] += itemQuantity;
 			}
 		}
 	}
 	
-	static void printResults(String [] itemNames, int [] customersBought, int [] typesBought) {
+	static ArrayList <String> findBoughtTypes (String [] itemNames, String [] boughtItemNames) {
+		ArrayList<String> matches =new ArrayList<String>();
+		
+		for (int i = 0; i < boughtItemNames.length; i++) {
+			
+			for (int j = i+1; j<boughtItemNames.length; j++) {
+
+				if ((boughtItemNames[i]).equals(boughtItemNames[j])) {
+					
+					if (matches.contains(boughtItemNames[i])) {
+						break;
+					}
+					
+					matches.add(boughtItemNames[i]);
+			    }
+		}
+		
+	}
+		//EVERYTHING ABOVE WORKS CORRECTLY
+		for (int i = 0; i < boughtItemNames.length; i++) {
+			if (matches.contains(boughtItemNames[i]) == false) {
+				matches.add(boughtItemNames[i]);
+			}
+		}
+		
+		//delete later
+//		for (int i =0; i<matches.size(); i++) {
+//			System.out.println(matches.get(i));
+//		}
+		
+		return matches;
+	}
+	//now that's time to add count of customers
+	//two methods
+	//(1) to add quantities because those are different - DONE
+	//(2) to add customers
+	
+	static void findTotalCustomers (String match, String [] itemNames, int [] totalCustomers) {
 		for (int i = 0; i<itemNames.length; i++) {
-			if (customersBought[i] == 0) {
+			if (match.equals(itemNames[i])) {
+				totalCustomers[i] += 1;
+			}
+		}
+	}
+	
+	static void printResults (String [] itemNames, int [] totalQuantities, int [] totalCustomers) {
+		for (int i = 0; i<itemNames.length; i++) {
+			
+			if (totalQuantities[i] == 0) {
 				System.out.println("No customers bought " + itemNames[i]);
 			} else {
-				System.out.println(customersBought[i] + " customers bought " + typesBought[i] + " " + itemNames[i]);
+				System.out.println(totalCustomers[i] + " customers bought " + totalQuantities [i] + " " + itemNames[i]);
 			}
+			
 		}
 	}
 }
