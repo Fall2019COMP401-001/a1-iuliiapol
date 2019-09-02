@@ -30,6 +30,7 @@ public class A1Novice {
 		 * example: If first customer bought 5 bananas, then
 		 * for [0] will refer to value of 5
 		 * */
+		
 		int [] boughtItems = new int [numCustomers];
 
 		/*
